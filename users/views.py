@@ -4,7 +4,7 @@ from django.views import View
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login,logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import CustomUserForm,ProfileUpdateForm
+from .forms import CustomUserForm, ProfileUpdateForm
 from django.contrib import messages
 # Create your views here.
 
@@ -43,11 +43,12 @@ class LoginView(View):
             user = login_form.get_user()
             login(request, user)
             messages.success(request, 'You are now logged in') 
-            return redirect('home:home_page')
+            return redirect('home_page')
         else:
             context = {
                 'form': login_form
             }
+            messages.error(request, 'Invalid username or password')
             return render(request, 'users/login.html', context=context)
 
 
