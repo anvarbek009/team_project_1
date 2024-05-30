@@ -3,6 +3,7 @@
 {% block title %}Register{% endblock %}
 
 {% block content %}
+    <div class="content">
     <h1>Register</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -16,4 +17,5 @@
             {% endfor %}
         </div>
     {% endif %}
+     </div>
 {% endblock %}

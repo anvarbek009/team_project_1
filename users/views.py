@@ -43,7 +43,7 @@ class LoginView(View):
             user = login_form.get_user()
             login(request, user)
             messages.success(request, 'You are now logged in') 
-            return redirect('home_page')
+            return redirect('home:home_page')
         else:
             context = {
                 'form': login_form

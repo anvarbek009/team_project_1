@@ -72,13 +72,13 @@
         }
 
         footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
             text-align: center;
             padding: 10px 0;
             background: #333;
             color: #fff;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
         }
 
         .messages {
@@ -100,6 +100,10 @@
             background: #f8d7da;
             color: #721c24;
         }
+
+        .content {
+    margin-bottom: 50px;
+}
     </style>
     {% block extra_head %}{% endblock %}
 </head>
@@ -107,7 +111,7 @@
     <header>
         <nav>
             <ul>
-                <li><a href="{% url 'home_page' %}">Home</a></li>
+                <li><a href="{% url 'home:home_page' %}">Home</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'users:profile' %}">Profile</a></li>
                     <li><a href="{% url 'users:logout' %}">Logout</a></li>

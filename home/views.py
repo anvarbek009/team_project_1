@@ -9,4 +9,4 @@ class HomePageTest(LoginRequiredMixin, View):
         if request.user.is_authenticated:
             return render(request, 'home_page.html')
         else:
-            return render(request, 'users:login')
+            return render('users:login')
