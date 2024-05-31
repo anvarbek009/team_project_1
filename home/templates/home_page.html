@@ -5,4 +5,6 @@
 {% block content %}
     <h1>Welcome to our Block!</h1>
     <p>You are logged in as {{ user.username }}></p>
+    <hr>
+    <a href="{% url 'blogs:category-list' %}">Read Articles</a>
 {% endblock %}
