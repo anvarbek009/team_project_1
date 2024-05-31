@@ -3,15 +3,20 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
-    <h1>Profile</h1>
-    <p>Username: {{ user.username }}</p>
-    <p>Email: {{ user.email }}</p>
-    <p>First Name: {{ user.first_name }}</p>
-    <p>Last Name: {{ user.last_name }}</p>
-    {% if user.image %}
-        <img src="{{ user.image.url }}" alt="User Image">
-    {% else %}
-        <p>No image available</p>
-    {% endif %}
-    <a href=" url {% url 'users:edit_profile' %}">Edit Profile</a>
+    <div class="card-profile">
+        {% if user.image %}
+            <img src="{{ user.image.url }}" alt="User Image" height="150px">
+        {% else %}
+            <p>No image available</p>
+        {% endif %}
+        <h2>Username: {{ user.username }}</h2>
+        <h3>Email: {{ user.email }}</h3>
+        <h3>First Name: {{ user.first_name }}</h3>
+        <h3>Last Name: {{ user.last_name }}</h3>
+
+        <button>
+            <a href=" url {% url 'users:edit_profile' %}">Edit Profile</a>           
+        </button>
+    </div>
+
 {% endblock %}

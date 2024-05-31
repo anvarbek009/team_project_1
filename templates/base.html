@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Site{% endblock %}</title>
     <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            list-style: none;
+        }
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -15,7 +22,8 @@
         header {
             background: #333;
             color: #fff;
-            padding: 10px 0;
+            padding: 25px 0;
+            
         }
 
         nav ul {
@@ -34,9 +42,58 @@
             text-decoration: none;
         }
 
+        .card-profile {
+            max-width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            background-color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .card-profile img {
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        .card-profile h2 {
+            margin: 10px 0;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .card-profile h3 {
+            margin: 5px 0;
+            font-size: 18px;
+            color: #666;
+        }
+
+        .card-profile button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .card-profile button a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .card-profile button:hover {
+            background-color: #555;
+        }
+
         main {
             padding: 20px;
             margin: 0 auto;
+            margin-top: 20px;
             max-width: 800px;
             background: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -81,26 +138,54 @@
             color: #fff;
         }
 
-        .messages {
-            margin: 10px 0;
+        .message-m {
+            position: fixed;
+            top: 15px;
+            left: 20px;
+            width: 300px;
+            z-index: 1000;
         }
 
-        .messages div {
-            padding: 10px;
-            border-radius: 4px;
+        ul.messages {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .messages li {
             margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+            opacity: 0.9;
+            font-size: 14px;
         }
 
-        .messages .success {
-            background: #d4edda;
-            color: #155724;
+        .messages li.info {
+            background-color: #31708f;
         }
 
-        .messages .error {
-            background: #f8d7da;
-            color: #721c24;
+        .messages li.success {
+            background-color: #3c763d;
         }
 
+        .messages li.warning {
+            background-color: #8a6d3b;
+        }
+
+        .messages li.error {
+            background-color: #a94442;
+        }
+
+        .messages li {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .messages li:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
         .content {
             margin-bottom: 50px;
         }
@@ -108,16 +193,16 @@
 </head>
 <body>
     {% if messages %}
-    <div class="message-m">
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
-                {{ message }}
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
+        <div class="message-m">
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    {% if message.level == 40 %}Important: {% endif %}
+                    {{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     {% endif %}
 
     <header>
@@ -140,5 +225,16 @@
     <footer>
         <p>&copy; 2024 My Site</p>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const messages = document.querySelectorAll('.messages li');
+                messages.forEach(function(message) {
+                    message.style.display = 'none';
+                });
+            }, 5000);
+        });
+    </script>
 </body>
 </html>
