@@ -6,7 +6,7 @@
 </head>
 <body>
     <div class="article-container">
-        <a href="{% url 'blogs:articles-detail' a.pk %}">{{ a.title }}</a>
+        <a href="{% url 'blogs:articles-detail' a.pk %}">{{ a.title }}<br><br></a>
     </div>
 {% endfor %}
 
