@@ -110,14 +110,20 @@
         <h1>{{ article.title }}</h1>
         <img src="{{ article.image.url }}" alt="Article Image">
         <p>Written by: {{ article.author }}</p>
+        <p>Rating : {{ average }}</p>
         <div class="content">
             <p>{{ article.text }}</p>
+        </div>
+        <div class="footer">
+            <a href="{% url 'blogs:review-detail' article.pk %}">Reviews</a> |
+            <a href="{% url 'blogs:add-review' article.pk %}">Add Review</a>
+            <hr>
         </div>
         <div class="footer">
             <a href="{% url 'blogs:articles-update' article.pk %}">Edit</a><br>
         </div>
         <div class="footer">
-            <a href="{% url 'blogs:articles-add' %}">Add</a>
+            <a href="{% url 'blogs:articles-add' %}">Add Article</a>
         </div>
         <div class="footer">
             <a href="{% url 'blogs:category-list' %}">Back to Categories</a>

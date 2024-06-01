@@ -1,10 +1,10 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Category, Articles, UserArticleInteraction
+from .models import Category, Articles, UserArticleInteraction, Reviews
 from django.views import View
 from django.views.generic.edit import UpdateView, CreateView
 from django.urls import reverse_lazy
-from .forms import ArticlesForm
+from .forms import ArticlesForm, ReviewsForm
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from users.models import CustomUser
 from django.db.models import Q
+
 
 # Create your views here.
 
@@ -25,12 +26,13 @@ class CategoryListView(View):
             'articles': articless
         }
         return render(request, 'blogs/category_list.html', context=context)
-    
+
+
 class ArticlesListView(View):
     def get(self, request, pk):
         articles = Articles.objects.filter(category=pk)
         context = {
-            'articles': articles
+            'articles': articles,
         }
         return render(request, 'blogs/articles_list.html', context=context)
 
@@ -38,7 +40,10 @@ class ArticlesListView(View):
 class ArticlesDetailView(View):
     def get(self, request, pk):
         article = Articles.objects.get(pk=pk)
-        return render(request, 'blogs/articles_detail.html', {'article': article})
+        star_given_review = Reviews.objects.filter(article_id=pk)
+        result = [review.star_given for review in star_given_review if 1 < review.star_given < 6]
+        average = round(sum(result) / len(result), 1) if result else None
+        return render(request, 'blogs/articles_detail.html', {'article': article, 'star_given_review':star_given_review, 'average':average})
 
 
 class ArticlesUpdateView(LoginRequiredMixin, View):
@@ -141,8 +146,40 @@ class WatchLaterArticlesView(View):
         return render(request, 'blogs/watch_later_articles.html', {'articles': articles})
 
 
+class AddReviewsView(View):
+    def get(self, request, pk):
+        articles = Articles.objects.get(pk=pk)
+        add_review_form = ReviewsForm()
+        context = {
+            'articles': articles,
+            'add_review_form': add_review_form
+        }
+        return render(request, 'blogs/add_review.html', context=context)
 
+    def post(self, request, pk):
+        articles = Articles.objects.get(pk=pk)
+        add_review_form = ReviewsForm(request.POST)
+        if add_review_form.is_valid():
+            review = Reviews.objects.create(
+                comment=add_review_form.cleaned_data['comment'],
+                article=articles,
+                user=request.user,
+                star_given=add_review_form.cleaned_data['star_given']
+            )
+            review.save()
+            messages.success(request, "Review added successfully.")
+            return redirect('blogs:articles-detail', pk=pk)
+        else:
+            messages.error(request, "Failed to add review. Please check the form.")
+            return render(request, 'blogs/add_review.html', {'articles': articles, 'add_review_form': add_review_form})
 
-
-
+class ReviewsDetailView(View):
+    def get(self, request, pk):
+        article = get_object_or_404(Articles, pk=pk)
+        reviews = Reviews.objects.filter(article_id=pk)
+        context = {
+            'article': article,
+            'reviews': reviews
+        }
+        return render(request, 'blogs/reviews_detail.html', context)
 
