@@ -113,6 +113,7 @@ class LikeArticleView(View):
         article = get_object_or_404(Articles, pk=pk)
         interaction, crated = UserArticleInteraction.objects.get_or_create(user=request.user, article=article)
         interaction.liked = not interaction.liked
+        messages.success(request,'Added to like')
         interaction.save()
         return redirect('blogs:articles-detail', pk=pk)
 
@@ -123,6 +124,7 @@ class WatchLaterArticleView(View):
         article = get_object_or_404(Articles, pk=pk)
         interaction, created = UserArticleInteraction.objects.get_or_create(user=request.user, article=article)
         interaction.watch_later = not interaction.watch_later
+        messages.success(request, 'Added to watch later')
         interaction.save()
         return redirect('blogs:articles-detail', pk=pk)
 
