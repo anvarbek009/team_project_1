@@ -10,5 +10,5 @@ class CategoryListView(View):
         context = {
             'category' : category
         }
-        return render(request, 'category_list.html', context=context)
+        return render(request, 'blogs/category_list.html', context=context)
 
