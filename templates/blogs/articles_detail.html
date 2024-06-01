@@ -122,6 +122,16 @@
         <div class="footer">
             <a href="{% url 'blogs:category-list' %}">Back to Categories</a>
         </div>
+        <div class="interaction-buttons">
+            <form action="{% url 'blogs:articles-like' pk=article.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Like</button>
+            </form>
+            <form action="{% url 'blogs:articles-watch-later' article.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Watch Later</button>
+            </form>
+        </div>
     </div>
     <script>
         // Function to hide messages after a specified time

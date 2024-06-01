@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Loked Articles{% endblock %}
+
+{% block content %}
+    <h1>Liked Articles</h1>
+    {% if articles %}
+    <ul>
+        {% for article in articles %}
+            <li>
+                <a href="{% url 'blogs:articles-detail' pk=article.pk%}">{{ article.title }}</a>
+                by {{ article.author.username }}
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>No liked articles.</p>
+    {% endif %}
+{% endblock %}

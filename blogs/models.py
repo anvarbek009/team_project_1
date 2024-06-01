@@ -35,3 +35,14 @@ class Articles(models.Model):
 
     def __str__(self):
         return f'{self.category.name} - {self.title}'
+
+
+class UserArticleInteraction(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    article = models.ForeignKey(Articles, on_delete=models.CASCADE)
+    liked = models.BooleanField(default=False)
+    watch_later = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ('user', 'article')
+

@@ -302,6 +302,8 @@
                 <li><a href="{% url 'blogs:category-list' %}">Read Articles</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'users:profile' %}">Profile</a></li>
+                    <li><a href="{% url 'blogs:liked-articles' %}">Liked Articles</a></li>
+                    <li><a href="{% url 'blogs:watch-later-articles' %}">Watch Later Articles</a></li>
                     <li><a href="{% url 'users:logout' %}">Logout</a></li>
                 {% else %}
                     <li><a href="{% url 'users:login' %}">Login</a></li>

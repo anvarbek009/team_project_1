@@ -1,5 +1,6 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Category, Articles
+from .models import Category, Articles, UserArticleInteraction
 from django.views import View
 from django.views.generic.edit import UpdateView, CreateView
 from django.urls import reverse_lazy
@@ -7,6 +8,8 @@ from .forms import ArticlesForm
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from users.models import CustomUser
 from django.db.models import Q
 
@@ -102,3 +105,44 @@ class SearchView(View):
             'query': query
         }
         return render(request, 'blogs/search_results.html', context=context)
+
+
+@method_decorator(login_required, name='dispatch')
+class LikeArticleView(View):
+    def post(self, request, pk):
+        article = get_object_or_404(Articles, pk=pk)
+        interaction, crated = UserArticleInteraction.objects.get_or_create(user=request.user, article=article)
+        interaction.liked = not interaction.liked
+        interaction.save()
+        return redirect('blogs:articles-detail', pk=pk)
+
+
+@method_decorator(login_required, name='dispatch')
+class WatchLaterArticleView(View):
+    def post(self, request, pk):
+        article = get_object_or_404(Articles, pk=pk)
+        interaction, created = UserArticleInteraction.objects.get_or_create(user=request.user, article=article)
+        interaction.watch_later = not interaction.watch_later
+        interaction.save()
+        return redirect('blogs:articles-detail', pk=pk)
+
+
+class LikedArticlesView(View):
+    def get(self, request):
+        interactions = UserArticleInteraction.objects.filter(user=request.user, liked=True)
+        articles = [interaction.article for interaction in interactions]
+        return render(request, 'blogs/liked_articles.html', {'articles': articles})
+
+
+class WatchLaterArticlesView(View):
+    def get(self, request):
+        interactions = UserArticleInteraction.objects.filter(user=request.user, watch_later=True)
+        articles = [interaction.article for interaction in interactions]
+        return render(request, 'blogs/watch_later_articles.html', {'articles': articles})
+
+
+
+
+
+
+
