@@ -88,3 +88,16 @@ class ArticlesCreateView(CreateView):
         response = super().form_valid(form)
         messages.success(self.request, "Article added successfully!")
         return response
+
+
+class SearchView(View):
+    def get(self, request):
+        query = request.GET.get('q')
+        article = Articles.objects.filter(
+            Q(Q(title__icontains=query) | Q(author__username__icontains=query))
+        )
+        context = {
+            'articles': article,
+            'query': query
+        }
+        return render(request, 'blogs/search_results.html', context=context)
