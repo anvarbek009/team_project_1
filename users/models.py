@@ -29,4 +29,4 @@ class CustomUser(AbstractUser):
         db_table = 'customuser'
 
     def __str__(self):
-        return f'{self.username} - {self.first_name}'
+        return f'{self.username}'

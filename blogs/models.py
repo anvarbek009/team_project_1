@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import CustomUser
+from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
@@ -14,7 +15,7 @@ class Category(models.Model):
 
 class Articles(models.Model):
     title = models.CharField(max_length=256, blank=True, null=True)
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     text = models.TextField(blank=True, null=True)
     star_given = models.IntegerField(
