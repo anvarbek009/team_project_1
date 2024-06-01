@@ -1,39 +1,6 @@
 {% extends 'base.html' %}
-<head>
-    <meta charset="UTF-8">
-    <title>Categories</title>
-    <style>
-        .header-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .categories-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .categories-list li {
-            margin-right: 20px;
-        }
-        .add-article-container {
-            margin-top: 20px; /* Adjust as needed */
-        }
-        .add-article a {
-            text-decoration: none;
-            color: white;
-            background-color: black;
-            padding: 10px 15px;
-            border-radius: 5px;
-        }
-        .add-article a:hover {
-            background-color: #333333;
-        }
-    </style>
-</head>
-<body>
+
+{% block title %} Articles {% endblock %}
 {% block content %}
 <hr>
 <header class="header-nav">
@@ -47,10 +14,25 @@
         </ul>
     </nav>
 </header>
+
+<div class="cards">
+    {% for a in articles %}
+        <div class="card">
+            <img src="{{ a.image.url }}" alt="Not found" class="card-img">
+            <h2>{{a.title}}</h2>
+            <div class="star-rating" data-rating="{{ a.star_given }}">
+                <span class="stars"></span>
+            </div>
+            <a href="{% url 'blogs:articles-detail' a.pk %}"><button>Read More</button></a>
+        </div>
+    {% endfor %}    
+</div>
+
+
+
 <div class="add-article-container">
     <div class="add-article">
         <a href="{% url 'blogs:articles-add' %}">Add Article</a>
     </div>
 </div>
 {% endblock content %}
-</body>

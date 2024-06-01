@@ -16,12 +16,13 @@ from django.db.models import Q
 class CategoryListView(View):
     def get(self, request):
         category = Category.objects.all()
+        articless = Articles.objects.all()
         context = {
-            'category': category
+            'category': category,
+            'articles': articless
         }
         return render(request, 'blogs/category_list.html', context=context)
-
-
+    
 class ArticlesListView(View):
     def get(self, request, pk):
         articles = Articles.objects.filter(category=pk)
