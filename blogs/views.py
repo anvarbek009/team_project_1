@@ -3,6 +3,8 @@ from .models import Category, Articles
 from django.views import View
 from django.views.generic.edit import UpdateView, CreateView
 from django.urls import reverse_lazy
+from .forms import ArticlesForm
+from django.contrib import messages
 # Create your views here.
 
 
@@ -37,5 +39,22 @@ class ArticlesUpdateView(UpdateView):
     def get_success_url(self):
         return reverse_lazy('blogs:articles-detail', kwargs={'pk': self.object.pk})
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Article updated successfully!")
+        return response
+
+class ArticlesCreateView(CreateView):
+    model = Articles
+    template_name = 'blogs/articles_create.html'
+    fields = '__all__'
+
+    def get_success_url(self):
+        return reverse_lazy('blogs:articles-list', kwargs={'pk': self.object.pk})
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Article added successfully!")
+        return response
 
 

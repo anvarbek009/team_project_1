@@ -28,5 +28,5 @@ class CustomUser(AbstractUser):
     class Meta:
         db_table = 'customuser'
 
-    def __self__(self):
-        return self.username
+    def __str__(self):
+        return f'{self.username} - {self.first_name}'

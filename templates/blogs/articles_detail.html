@@ -41,10 +41,72 @@
             text-decoration: none;
             color: #007BFF; /* Adjust color as needed */
         }
+        .message-m {
+            position: fixed;
+            top: 15px;
+            left: 20px;
+            width: 300px;
+            z-index: 1000;
+        }
+
+        ul.messages {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .messages li {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .messages li.info {
+            background-color: #31708f;
+        }
+
+        .messages li.success {
+            background-color: #3c763d;
+        }
+
+        .messages li.warning {
+            background-color: #8a6d3b;
+        }
+
+        .messages li.error {
+            background-color: #a94442;
+        }
+
+        .messages li {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .messages li:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        .content {
+            margin-bottom: 50px;
+        }
     </style>
 </head>
 <body>
     <div class="article-container">
+        {% if messages %}
+        <div class="message-m">
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="{{ message.tags }}">
+                    {{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
         <h1>{{ article.title }}</h1>
         <img src="{{ article.image.url }}" alt="Article Image">
         <p>Written by: {{ article.author }}</p>
@@ -58,5 +120,19 @@
             <a href="{% url 'blogs:category-list' %}">Back to Categories</a>
         </div>
     </div>
+    <script>
+        // Function to hide messages after a specified time
+        function hideMessages() {
+            const messageContainer = document.querySelector('.message-m');
+            if (messageContainer) {
+                setTimeout(() => {
+                    messageContainer.style.display = 'none';
+                }, 3000); // 0.0 seconds
+            }
+        }
+
+        // Call the function on page load
+        document.addEventListener('DOMContentLoaded', hideMessages);
+    </script>
 </body>
 </html>
