@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
-{%block title %}Categories{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>Categories</title>
+</head>
+<body>
 {% block content %}
 <hr>
 <header>
@@ -7,10 +11,13 @@
         <ul>
             {% for c in category %}
                 <li>
-                    <a href="#">{{ c.name }}    </a>
+                    <a href="{% url 'blogs:articles-list' c.pk %}">{{ c.name }}    </a>
                 </li>
             {% endfor %}
         </ul>
     </nav>
 </header>
+
+
 {% endblock content %}
+</body>

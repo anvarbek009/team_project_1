@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ article.title }}</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Times New Roman, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .article-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 800px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .article-container img {
+            display: block;
+            margin: 0 auto;
+            height: 250px;
+            width: auto; /* Adjust this if you need a specific width */
+        }
+        .article-container .content p {
+            text-align: justify;
+        }
+        .footer {
+            align-self: flex-start;
+            margin-top: 20px; /* Adjust as needed */
+        }
+        .footer a {
+            text-decoration: none;
+            color: #007BFF; /* Adjust color as needed */
+        }
+    </style>
+</head>
+<body>
+    <div class="article-container">
+        <h1>{{ article.title }}</h1>
+        <img src="{{ article.image.url }}" alt="Article Image">
+        <p>Written by: {{ article.author }}</p>
+        <div class="content">
+            <p>{{ article.text }}</p>
+        </div>
+        <div class="footer">
+            <a href="{% url 'blogs:articles-update' article.pk %}">Update</a><br>
+        </div>
+        <div class="footer">
+            <a href="{% url 'blogs:category-list' %}">Back to Categories</a>
+        </div>
+    </div>
+</body>
+</html>

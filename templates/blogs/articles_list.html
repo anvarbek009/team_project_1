@@ -1,0 +1,15 @@
+{% extends 'blogs/blogs_base.html' %}
+{% block content %}
+{% for a in articles %}
+<head>
+    <title>{{ a.title }}</title>
+</head>
+<body>
+    <div class="article-container">
+        <a href="{% url 'blogs:articles-detail' a.pk %}">{{ a.title }}</a>
+    </div>
+{% endfor %}
+
+{% endblock content %}
+
+</body>
