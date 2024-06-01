@@ -204,7 +204,6 @@
             </ul>
         </div>
     {% endif %}
-
     <header>
         <nav>
             <ul>
@@ -216,6 +215,12 @@
                     <li><a href="{% url 'users:login' %}">Login</a></li>
                     <li><a href="{% url 'users:register' %}">Register</a></li>
                 {% endif %}
+                <li>
+                    <form action="{% url 'blogs:search' %}" method="get" style="display: inline;">
+                        <input type="text" name="q" placeholder="Search blogs..." required>
+                        <button type="submit">Submit</button>
+                    </form>
+                </li>
             </ul>
         </nav>
     </header>
