@@ -82,7 +82,7 @@ class ArticlesCreateView(CreateView):
     fields = '__all__'
 
     def get_success_url(self):
-        return reverse_lazy('blogs:articles-list', kwargs={'pk': self.object.pk})
+        return reverse_lazy('blogs:articles-detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
         response = super().form_valid(form)

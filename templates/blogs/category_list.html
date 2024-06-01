@@ -2,22 +2,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Categories</title>
+    <style>
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .categories-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .categories-list li {
+            margin-right: 20px;
+        }
+        .add-article-container {
+            margin-top: 20px; /* Adjust as needed */
+        }
+        .add-article a {
+            text-decoration: none;
+            color: white;
+            background-color: black;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        .add-article a:hover {
+            background-color: #333333;
+        }
+    </style>
 </head>
 <body>
 {% block content %}
 <hr>
-<header>
+<header class="header-nav">
     <nav>
-        <ul>
+        <ul class="categories-list">
             {% for c in category %}
                 <li>
-                    <a href="{% url 'blogs:articles-list' c.pk %}">{{ c.name }}    </a>
+                    <a href="{% url 'blogs:articles-list' c.pk %}">{{ c.name }}</a>
                 </li>
             {% endfor %}
         </ul>
     </nav>
 </header>
-
-
+<div class="add-article-container">
+    <div class="add-article">
+        <a href="{% url 'blogs:articles-add' %}">Add Article</a>
+    </div>
+</div>
 {% endblock content %}
 </body>
