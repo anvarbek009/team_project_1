@@ -90,14 +90,14 @@
             background-color: #555;
         }
 
-        /* main {
+        .main_page {
             padding: 20px;
             margin: 0 auto;
             margin-top: 20px;
             max-width: 800px;
             background: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        } */
+        }
 
         h1 {
             color: #333;
@@ -208,6 +208,7 @@
         <nav>
             <ul>
                 <li><a href="{% url 'home:home_page' %}">Home</a></li>
+                <li><a href="{% url 'blogs:category-list' %}">Read Articles</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'users:profile' %}">Profile</a></li>
                     <li><a href="{% url 'users:logout' %}">Logout</a></li>

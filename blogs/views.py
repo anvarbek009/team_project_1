@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.mixins import LoginRequiredMixin
 from users.models import CustomUser
-
+from django.db.models import Q
 
 # Create your views here.
 
