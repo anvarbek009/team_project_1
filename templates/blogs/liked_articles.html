@@ -1,18 +1,22 @@
 {% extends 'base.html' %}
 
-{% block title %}Loked Articles{% endblock %}
+{% block title %}Liked Articles{% endblock %}
 
 {% block content %}
-    <h1>Liked Articles</h1>
     {% if articles %}
-    <ul>
-        {% for article in articles %}
-            <li>
-                <a href="{% url 'blogs:articles-detail' pk=article.pk%}">{{ article.title }}</a>
-                by {{ article.author.username }}
-            </li>
-        {% endfor %}
-    </ul>
+        <div class="cards">
+            {% for a in articles %}
+                <div class="card">
+                    <img src="{{ a.image.url }}" alt="Not found" class="card-img">
+                    <h2>{{a.title}}</h2>
+                    <h4>Author:{{a.author}}</h4>
+                    <div class="star-rating" data-rating="{{ a.star_given }}">
+                        <span class="stars"></span>
+                    </div>
+                    <a href="{% url 'blogs:articles-detail' a.pk %}"><button>Read More</button></a>
+                </div>
+            {% endfor %}
+        </div>       
     {% else %}
         <p>No liked articles.</p>
     {% endif %}
