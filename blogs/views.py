@@ -116,16 +116,23 @@ class SearchView(View):
 class LikeArticleView(View):
     def post(self, request, pk):
         article = get_object_or_404(Articles, pk=pk)
-        interaction, created = UserArticleInteraction.objects.get_or_create(user=request.user, article=article)
-        if interaction.liked:
-            interaction.liked = False
-            messages.success(request, 'Removed from likes')
-        else:
-            interaction.liked = True
-            messages.success(request, 'Added to likes')
+        interaction, crated = UserArticleInteraction.objects.get_or_create(user=request.user, article=article)
+        interaction.liked = not interaction.liked
+        messages.success(request,'Added to like')
         interaction.save()
         return redirect('blogs:articles-detail', pk=pk)
 
+
+@method_decorator(login_required, name='dispatch')
+class UnlikeArticleView(View):
+    def post(self, request, pk):
+        article = get_object_or_404(Articles, pk=pk)
+        interaction = get_object_or_404(UserArticleInteraction, user=request.user, article=article)
+        if interaction.liked:
+            interaction.liked = False
+            interaction.save()
+            messages.success(request, 'Removed from likes')
+        return redirect('blogs:liked-articles')
 
 @method_decorator(login_required, name='dispatch')
 class WatchLaterArticleView(View):
@@ -146,7 +153,7 @@ class LikedArticlesView(View):
         context = {
             'liked_articles': liked_articles
         }
-        return render(request, 'blogs/liked_articles.html', context)
+        return render(request, 'blogs/liked_articles.html', context=context)
 
 class WatchLaterArticlesView(View):
     def get(self, request):

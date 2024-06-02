@@ -5,15 +5,19 @@
 {% block content %}
     {% if liked_articles %}
         <div class="cards">
-            {% for article in liked_articles %}
+            {% for a in liked_articles %}
                 <div class="card">
-                    <img src="{{ article.image.url }}" alt="Not found" class="card-img">
-                    <h2>{{article.title}}</h2>
-                    <h4>Author:{{article.author}}</h4>
-                    <div class="star-rating" data-rating="{{ article.star_given }}">
+                    <img src="{{ a.image.url }}" alt="Not found" class="card-img">
+                    <h2>{{a.title}}</h2>
+                    <h4>Author:{{a.author}}</h4>
+                    <div class="star-rating" data-rating="{{ a.star_given }}">
                         <span class="stars"></span>
                     </div>
-                    <a href="{% url 'blogs:articles-detail' article.pk %}"><button>Read More</button></a>
+                    <a href="{% url 'blogs:articles-detail' a.pk %}"><button>Read More</button></a>
+                    <form action="{% url 'blogs:unlike-articles' a.pk %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="unlike-button">Unlike</button>
+                    </form>
                 </div>
             {% endfor %}
         </div>
