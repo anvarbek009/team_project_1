@@ -3,20 +3,20 @@
 {% block title %}Liked Articles{% endblock %}
 
 {% block content %}
-    {% if articles %}
+    {% if liked_articles %}
         <div class="cards">
-            {% for a in articles %}
+            {% for article in liked_articles %}
                 <div class="card">
-                    <img src="{{ a.image.url }}" alt="Not found" class="card-img">
-                    <h2>{{a.title}}</h2>
-                    <h4>Author:{{a.author}}</h4>
-                    <div class="star-rating" data-rating="{{ a.star_given }}">
+                    <img src="{{ article.image.url }}" alt="Not found" class="card-img">
+                    <h2>{{article.title}}</h2>
+                    <h4>Author:{{article.author}}</h4>
+                    <div class="star-rating" data-rating="{{ article.star_given }}">
                         <span class="stars"></span>
                     </div>
-                    <a href="{% url 'blogs:articles-detail' a.pk %}"><button>Read More</button></a>
+                    <a href="{% url 'blogs:articles-detail' article.pk %}"><button>Read More</button></a>
                 </div>
             {% endfor %}
-        </div>       
+        </div>
     {% else %}
         <p>No liked articles.</p>
     {% endif %}
