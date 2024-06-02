@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (CategoryListView, ArticlesListView, ArticlesUpdateView,
                     ArticlesDetailView, ArticlesCreateView, SearchView, LikeArticleView,
                     WatchLaterArticleView, WatchLaterArticlesView, LikedArticlesView,
-                    AddReviewsView, ReviewsDetailView, UnlikeArticleView)
+                    AddReviewsView, ReviewsDetailView, UnlikeArticleView, RemoveWatchLaterView)
 
 app_name = 'blogs'
 urlpatterns = [
@@ -18,6 +18,7 @@ urlpatterns = [
     path('watch-later-articles/', WatchLaterArticlesView.as_view(), name='watch-later-articles'),
     path('add_review/<int:pk>/', AddReviewsView.as_view(), name='add-review'),
     path('reviews-detail/<int:pk>/', ReviewsDetailView.as_view(), name='review-detail'),
-    path('unlike/<int:pk>/articles', UnlikeArticleView.as_view(), name='unlike-articles')
+    path('unlike/<int:pk>/articles', UnlikeArticleView.as_view(), name='unlike-articles'),
+    path('remove/<int:pk>/watch-later', RemoveWatchLaterView.as_view(), name='remove-watch-later')
 
 ]

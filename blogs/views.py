@@ -146,6 +146,18 @@ class WatchLaterArticleView(View):
 
 
 @method_decorator(login_required, name='dispatch')
+class RemoveWatchLaterView(View):
+    def post(self, request, pk):
+        article = get_object_or_404(Articles, pk=pk)
+        interaction = get_object_or_404(UserArticleInteraction, user=request.user, article=article)
+        if interaction.watch_later:
+            interaction.watch_later = False
+            interaction.save()
+            messages.success(request, 'Removed from Watch Later')
+        return redirect('blogs:watch-later-articles')
+
+
+@method_decorator(login_required, name='dispatch')
 class LikedArticlesView(View):
     def get(self, request):
         liked_interactions = UserArticleInteraction.objects.filter(user=request.user, liked=True)
@@ -155,6 +167,7 @@ class LikedArticlesView(View):
         }
         return render(request, 'blogs/liked_articles.html', context=context)
 
+@method_decorator(login_required, name='dispatch')
 class WatchLaterArticlesView(View):
     def get(self, request):
         interactions = UserArticleInteraction.objects.filter(user=request.user, watch_later=True)

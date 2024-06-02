@@ -15,6 +15,10 @@
                         <span class="stars"></span>
                     </div>
                     <a href="{% url 'blogs:articles-detail' a.pk %}"><button>Read More</button></a>
+                    <form action="{% url 'blogs:remove-watch-later' a.pk %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="remove-button">Remove</button>
+                    </form>
                 </div>
             {% endfor %}
         </div>
