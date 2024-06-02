@@ -108,13 +108,11 @@
                 <a href="{% url 'blogs:add-review' article.pk%}">Add Review</a>
             </div>
             <div class="footer">
-                <a href="{% url 'blogs:articles-update' article.pk %}">Edit</a><br>
+                <a href="{% url 'blogs:articles-update' article.pk %}">Edit</a> |
+                <a href="{% url 'blogs:articles-add' %}">Add</a> |
+                <a href="{% url 'blogs:delete-article' article.pk %}">Delete</a>
             </div>
-            
-            <div class="footer">
-                <a href="{% url 'blogs:articles-add' %}">Add</a>
-            </div>
-            
+
             <div class="footer">
                 <a href="{% url 'blogs:category-list' %}">Back to Categories</a>
             </div>

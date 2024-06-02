@@ -131,7 +131,7 @@ class UnlikeArticleView(View):
         if interaction.liked:
             interaction.liked = False
             interaction.save()
-            messages.success(request, 'Removed from likes')
+            messages.success(request, 'Removed from Liked Articles')
         return redirect('blogs:liked-articles')
 
 @method_decorator(login_required, name='dispatch')
@@ -212,3 +212,23 @@ class ReviewsDetailView(View):
         }
         return render(request, 'blogs/reviews_detail.html', context)
 
+
+class ArticlesDeleteView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        article = get_object_or_404(Articles, pk=pk)
+        if article.author != request.user:
+            raise PermissionDenied("You are not allowed to delete this article.")
+
+        context = {
+            'article': article
+        }
+        return render(request, 'blogs/articles_delete.html', context=context)
+
+    def post(self, request, pk):
+        article = get_object_or_404(Articles, pk=pk)
+        if article.author != request.user:
+            raise PermissionDenied("You are not allowed to delete this article.")
+
+        article.delete()
+        messages.success(request, "Article deleted successfully!")
+        return redirect('blogs:articles-list', pk=pk)
