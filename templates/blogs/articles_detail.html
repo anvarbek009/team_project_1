@@ -1,96 +1,5 @@
 {% extends 'base.html' %}
 {% block title %} {{article.title}} {% endblock %}
-
-<<<<<<< HEAD
-        ul.messages {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .messages li {
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            color: white;
-            opacity: 0.9;
-            font-size: 14px;
-        }
-
-        .messages li.info {
-            background-color: #31708f;
-        }
-
-        .messages li.success {
-            background-color: #3c763d;
-        }
-
-        .messages li.warning {
-            background-color: #8a6d3b;
-        }
-
-        .messages li.error {
-            background-color: #a94442;
-        }
-
-        .messages li {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            transition: opacity 0.5s, transform 0.5s;
-        }
-
-        .messages li:hover {
-            opacity: 1;
-            transform: scale(1.05);
-        }
-        .content {
-            margin-bottom: 50px;
-        }
-    </style>
-</head>
-<body>
-    <div class="article-container">
-        {% if messages %}
-        <div class="message-m">
-            <ul class="messages">
-                {% for message in messages %}
-                <li class="{{ message.tags }}">
-                    {{ message }}
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-        <h1>{{ article.title }}</h1>
-        <img src="{{ article.image.url }}" alt="Article Image">
-        <p>Written by: {{ article.author }}</p>
-        <p>Rating : {{ average }}</p>
-        <div class="content">
-            <p>{{ article.text }}</p>
-        </div>
-        <div class="footer">
-            <a href="{% url 'blogs:review-detail' article.pk %}">Reviews</a> |
-            <a href="{% url 'blogs:add-review' article.pk %}">Add Review</a>
-            <hr>
-        </div>
-        <div class="footer">
-            <a href="{% url 'blogs:articles-update' article.pk %}">Edit</a><br>
-        </div>
-        <div class="footer">
-            <a href="{% url 'blogs:articles-add' %}">Add Article</a>
-        </div>
-        <div class="footer">
-            <a href="{% url 'blogs:category-list' %}">Back to Categories</a>
-        </div>
-        <div class="interaction-buttons">
-            <form action="{% url 'blogs:articles-like' pk=article.pk %}" method="post">
-                {% csrf_token %}
-                <button type="submit">Like</button>
-            </form>
-            <form action="{% url 'blogs:articles-watch-later' article.pk %}" method="post">
-                {% csrf_token %}
-                <button type="submit">Watch Later</button>
-            </form>
-=======
 {%block content %}
     <div class="main_page">
         <div class="article-container ">
@@ -129,7 +38,6 @@
                     <button type="submit">Watch Later</button>
                 </form>
             </div>
->>>>>>> be84109cee40b005bda1772549ca9c4cb1ed6bf2
         </div>
     </div>
 {% endblock %}
